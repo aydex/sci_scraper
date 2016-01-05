@@ -67,11 +67,11 @@ class LangGen:
                 if content == LangGen.Content.COMMENT:
                     out = "! " + args[0]
                 elif content == LangGen.Content.DECLARATION:
+                    # Some datatypes might have special declarations (e.g. string requires "")
                     out = args[0] + " :: " + args[1] + " = " + args[2]
                 elif content == LangGen.Content.FUNCTION:
                     out = args[0] + "("
-                    out.join(arg + ", " for arg in args[1])
-                    out = out[:-2]
+                    out += ", ".join(args[1])
                     out += ")"
 
             return out
