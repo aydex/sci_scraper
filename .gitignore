@@ -58,3 +58,27 @@ target/
 
 # PyCharm
 .idea/
+
+### Linux ###
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+### Vim ###
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+### Nanoc ###
+# For projects using nanoc (http://nanoc.ws/)
+
+# Crash Log
+crash.log
+
