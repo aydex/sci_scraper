@@ -22,7 +22,7 @@ lines = text[text.find('\n', text.find('----------')) + 1 : ].split('\n')
 #del lines[-1]
 print len(lines)
 
-dict = {}
+#dict = {}
 
 for line in lines:
     if len(line.strip()) > 0:
@@ -30,11 +30,15 @@ for line in lines:
         name = re.sub("(\.|\{(.*?)\}|\{|\}|\)|\(|,)", '', elements[0])
         name = name.lower().strip()
         name = re.sub("(-|_| |/|\\|)", '_', name)
-        values = []
         elements[1] = elements[1].replace(' ', '')
-        dict[name] = elements[1:]
-        gen.add_line(dec, ["string", name, dict[name][0]])
-        print name
+        #dict[name] = elements[1:]
+        #gen.add_line(dec, ["real", name, dict[name][0]])
+        gen.add_line(dec, ["real(16)", name, elements[1]])
 
-print len(dict.keys())
-print(gen.output(lang))
+
+f = open('test.f', 'w+')
+for line in gen.output(lang):
+    f.write(line + '\n')
+
+f.close()
+
