@@ -15,12 +15,13 @@ gen = LangGen();
 page = requests.get(site);
 root = html.fromstring(page.content);
 
-section = find_section(root, "Table_of_universal_constants")[0];
-table = section.getparent().getnext();
-
 
 def find_section(node, name):
     return node.xpath('//h2/span[@id="' + name + '"]');
+
+
+section = find_section(root, "Table_of_universal_constants")[0];
+table = section.getparent().getnext();
 
 
 def scrape_table(node):
