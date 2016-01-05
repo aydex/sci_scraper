@@ -28,6 +28,7 @@ for line in lines:
     if len(line.strip()) > 0:
         elements = re.split('  +', line)
         name = re.sub("(\.|\{(.*?)\}|\{|\}|\)|\(|,)", '', elements[0])
+        elements[1] = re.sub("(\.\.\.)", '', elements[1])
         name = name.lower().strip()
         name = re.sub("(-|_| |/|\\|)", '_', name)
         elements[1] = elements[1].replace(' ', '')
