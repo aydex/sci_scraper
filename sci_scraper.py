@@ -28,13 +28,13 @@ for line in lines:
     if len(line.strip()) > 0:
         elements = re.split('  +', line)
         name = re.sub("(\.|\{(.*?)\}|\{|\}|\)|\(|,)", '', elements[0])
+        elements[1] = re.sub("(\.\.\.)", '', elements[1])
         name = name.lower().strip()
         name = re.sub("(-|_| |/|\\|)", '_', name)
-        values = []
         elements[1] = elements[1].replace(' ', '')
         dict[name] = elements[1:]
         gen.add_line(dec, ["string", name, dict[name][0]])
-        print name
+        print elements[1]
 
 print len(dict.keys())
 print(gen.output(lang))
