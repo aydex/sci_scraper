@@ -49,8 +49,8 @@ def pull_table_column_names(first_row):
 
 class LangGen:
     """
-    Class for generating simple code in certain 
-    languages. 
+    Class for generating simple code in certain
+    languages.
     """
 
     def __init__(self):
@@ -61,7 +61,7 @@ class LangGen:
 
     class Language:
         """
-        Enum of the different languages. 
+        Enum of the different languages.
         """
 
         def __init__(self):
@@ -97,7 +97,7 @@ class LangGen:
     class Generator:
         """
         Class for generating language specific text
-        lines from generic structure. 
+        lines from generic structure.
         """
 
         def __init__(self, language):
@@ -124,6 +124,6 @@ class LangGen:
         self._content.append(element)
 
     def output(self, language):
-        gen = LangGen.Generator(language)
-        out = [gen.generate(line) for line in self._content]
+        generator = LangGen.Generator(language)
+        out = [generator.generate(line) for line in self._content]
         return out
