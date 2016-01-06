@@ -31,14 +31,21 @@ for line in lines:
         elements = re.split('  +', line)
         name = re.sub("(\.|\{(.*?)\}|\{|\}|\)|\(|,)", '', elements[0])
         elements[1] = re.sub("(\.\.\.)", '', elements[1])
-        name = name.lower().strip()
+        name = name.upper().strip()
         name = re.sub("(-|_| |/|\\|)", '_', name)
         elements[1] = elements[1].replace(' ', '')
         elements[1] = elements[1].replace('e', 'd')
         elements[2] = elements[2].replace('e', 'd')
         #dict[name] = elements[1:]
         #gen.add_line(dec, ["real", name, dict[name][0]])
-        gen.add_line(dec, ["real(8)", name, elements[1]])
+        gen.add_line(dec, ["real(8), parameter", name, elements[1]])
+        if elements[2] != "(exact)":
+            gen.add_line(dec, ["real(8), parameter", name+"__uncertainty", elements[2]])
+        else:
+            gen.add_line(dec, ["real(8), parameter", name+"__uncertainty", 0])
+
+        if len(elements) > 3:
+            gen.add_line(dec, ["character(len=*), parameter", name+"__unit", "\'" + elements[3] + "\'"])
 
 
 if not os.path.exists("output"):
