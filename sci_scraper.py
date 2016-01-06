@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 ############# Imports ###################
+import os
+
 import requests
 import re
 
@@ -37,7 +39,10 @@ for line in lines:
         gen.add_line(dec, ["real(16)", name, elements[1]])
 
 
-f = open('test.f', 'w+')
+if not os.path.exists("output"):
+    os.makedirs("output")
+
+f = open('output/test.f', 'w+')
 for line in gen.output(lang):
     f.write(line + '\n')
 
