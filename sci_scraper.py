@@ -34,9 +34,11 @@ for line in lines:
         name = name.lower().strip()
         name = re.sub("(-|_| |/|\\|)", '_', name)
         elements[1] = elements[1].replace(' ', '')
+        elements[1] = elements[1].replace('e', 'd')
+        elements[2] = elements[2].replace('e', 'd')
         #dict[name] = elements[1:]
         #gen.add_line(dec, ["real", name, dict[name][0]])
-        gen.add_line(dec, ["real(16)", name, elements[1]])
+        gen.add_line(dec, ["real(8)", name, elements[1]])
 
 
 if not os.path.exists("output"):
