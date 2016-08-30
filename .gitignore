@@ -82,8 +82,5 @@ Session.vim
 # Crash Log
 crash.log
 
-# Fortran source code
-*.f
-
 # Output files
 output/
