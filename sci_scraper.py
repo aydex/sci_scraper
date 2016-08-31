@@ -8,15 +8,13 @@ import re
 
 from lang_gen import LangGen
 
-############# Scientific Scraper ########
-
-#### Parameters ####
+############# Parameters ################
 site = "http://physics.nist.gov/cuu/Constants/Table/allascii.txt"
-pad_length = len('__00__u')
-length_limit = 63
-####################
+var_name_pad_length = len('__00__u')
+var_name_length_limit = 63
+module_name = 'phys_constants.f'
 
-
+############# Header and footer #########
 header = """! ###################### MODULE ##################"
 ! Physical constants module
 ! 
@@ -40,7 +38,8 @@ public
 
 """
 
-footer = "\nend module\n"
+footer = "end module\n\n"
+#########################################
 
 gen = LangGen()
 emp = LangGen.ContentType.EMPTY
@@ -120,8 +119,8 @@ for line in lines:
 
         # Process name string
         name = parse_var_name(name_string)
-        if (len(name) + pad_length > length_limit):
-            name = name[:length_limit - pad_length]
+        if (len(name) + var_name_pad_length > var_name_length_limit):
+            name = name[:var_name_length_limit - var_name_pad_length]
         if (name in dupl_dict):
             dupl_dict[name] += 1
         else:
@@ -170,7 +169,7 @@ for element in name_list:
 if not os.path.exists("output"):
     os.makedirs("output")
 
-f = open('output/test.f', 'w+')
+f = open('output/' + module_name, 'w+')
 f.write(header)
 for line in gen.output(lang):
     f.write(line + '\n')
