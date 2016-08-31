@@ -14,7 +14,6 @@ class LangGen:
         pass
 
     _content = []
-    _header = []
 
     class Language:
         """
@@ -29,24 +28,26 @@ class LangGen:
         JAVA = 3
         C = 4
 
-    class Content:
+    class ContentType:
         """
         Enum representing different content types:
-            ENUM = (id, number_of_arguments)
+            CONTENT_TYPE = (id, number_of_arguments)
         """
 
         def __init__(self):
             pass
 
-        COMMENT = (1, 1)
+        EMPTY = (1,0)
+        # Args: (none)
+        COMMENT = (2, 1)
         # Args:
         #   - String: text
-        DECLARATION = (2, 3)
+        DECLARATION = (3, 3)
         # Args:
         #   - String: datatype
         #   - String: name of variable
         #   - String: value of variable
-        FUNCTION = (3, 2)
+        FUNCTION = (4, 2)
         # Args:
         #   - String: function name
         #   - List: function args
@@ -61,26 +62,26 @@ class LangGen:
             self.language = language
 
         def generate(self, line):
-            content = line[0]
+            content_type = line[0]
             args = line[1]
-            if self.language == LangGen.Language.FORTRAN:
-                if content == LangGen.Content.COMMENT:
+            if (self.language == LangGen.Language.FORTRAN):
+                if (content_type == LangGen.ContentType.EMPTY):
+                    out = ''
+                if (content_type == LangGen.ContentType.COMMENT):
                     out = "! " + args[0]
-                elif content == LangGen.Content.DECLARATION:
+                elif (content_type == LangGen.ContentType.DECLARATION):
                     # Some datatypes might have special declarations (e.g. string requires "")
                     out = args[0] + " :: " + args[1] + " = " + args[2]
-                elif content == LangGen.Content.FUNCTION:
-                    out = args[0] + "("
-                    out += ", ".join(args[1])
-                    out += ")"
-
+                elif (content_type == LangGen.ContentType.FUNCTION):
+                    out = args[0] + "(" + ", ".join(args[1]) + ")"
             return out
 
-    def add_line(self, content, args):
-        element = (content, args)
+    def add_line(self, content_type, args):
+        element = (content_type, args)
         self._content.append(element)
 
     def output(self, language):
         gen = LangGen.Generator(language)
         out = [gen.generate(line) for line in self._content]
         return out
+
